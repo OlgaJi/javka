@@ -99,7 +99,11 @@ public class StaticArray implements Array {
                 bubbleSort();
                 break;
             case INSERTION:
+                insertionSort();
+                break;
             case SELECTION:
+                selectionSort();
+                break;
             case MERGE:
             case QUICK:
             default:
@@ -123,9 +127,7 @@ public class StaticArray implements Array {
         for (int j = 0; j < array.length; j++) {
             for (int i = 1; i < array.length; i++) {
                 if (array[i] < array[i - 1]) {
-                    temp = array[i - 1];
-                    array[i - 1] = array[i];
-                    array[i] = temp;
+                    swap(array, i, i - 1);
                 }
             }
         }
@@ -133,10 +135,27 @@ public class StaticArray implements Array {
 
     private void insertionSort() {
         //TODO*: сортировка вставками (по возрастанию)
+        for (int i = 1; i < array.length; i++) {
+            for (int j = i; j > 0; j--) {
+                if (array[j] < array[j - 1]) {
+                    swap(array, j - 1, j);
+                }
+            }
+        }
     }
 
     private void selectionSort() {
         //TODO*: сортировка выбором (по возрастанию)
+        int max;
+        for (int i = 0; i < array.length; i++) {
+            max = 0;
+            for (int j = 0; j < array.length - i; j++) {
+                if (array[j] > array[max]) {
+                    max = j;
+                }
+            }
+            swap(array, max, array.length - i - 1);
+        }
     }
 
     private void mergeSort() {
@@ -155,5 +174,11 @@ public class StaticArray implements Array {
             }
         }
         return true;
+    }
+
+    private void swap(int[] array, int index1, int index2) {
+        int temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
     }
 }

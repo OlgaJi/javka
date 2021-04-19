@@ -6,10 +6,11 @@ public class App {
         int[] a = new int[]{1, 3, 7, 8, 5, 6, 9, 8};
         var staticArray = new StaticArray(a);
         System.out.println(staticArray);
+        staticArray.sort(ArraySort.SELECTION);
+        System.out.println(staticArray);
 
         var sortedArray = new SortedArray(a);
         System.out.println(sortedArray);
-        System.out.println(sortedArray.indexOf(8));
 
         var dynamicArray = new DynamicArray();
         dynamicArray.add(5);
