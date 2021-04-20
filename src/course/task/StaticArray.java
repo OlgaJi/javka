@@ -105,6 +105,8 @@ public class StaticArray implements Array {
                 selectionSort();
                 break;
             case MERGE:
+                mergeSort();
+                break;
             case QUICK:
             default:
                 sort();
@@ -160,6 +162,7 @@ public class StaticArray implements Array {
 
     private void mergeSort() {
         //TODO**: сортировка слиянием (по возрастанию)
+        mergeSortRec(array);
     }
 
     private void quickSort() {
@@ -181,4 +184,53 @@ public class StaticArray implements Array {
         array[index1] = array[index2];
         array[index2] = temp;
     }
+
+    private int[] mergeSortedArrays(int[] array1, int[] array2) {
+        int[] result = new int[array1.length + array2.length];
+        int i1 = 0;
+        int i2 = 0;
+        for (int i = 0; i < result.length; i++) {
+            if (i1 == array1.length) {
+                result[i] = array2[i2];
+                i2++;
+                continue;
+            }
+            if (i2 == array2.length) {
+                result[i] = array1[i1];
+                i1++;
+                continue;
+            }
+            if (array1[i1] < array2[i2]) {
+                result[i] = array1[i1];
+                i1++;
+            } else {
+                result[i] = array2[i2];
+                i2++;
+            }
+        }
+        return result;
+    }
+
+    private int[] copy(int[] source, int index1, int index2) {
+        int[] destination = new int[index2 - index1];
+        for (int i = 0; i < index2 - index1; i++) {
+            destination[i] = source[index1 + i];
+        }
+        return destination;
+    }
+
+    private int[] mergeSortRec(int[] array) {
+        int[] result = new int[array.length];
+        if (array.length > 1) {
+            int[] array1 = copy(array, 0, array.length / 2);
+            int[] array2 = copy(array, array.length / 2, array.length);
+            array1 = mergeSortRec(array1);
+            array2 = mergeSortRec(array2);
+            result = mergeSortedArrays(array1, array2);
+            return result;
+        } else {
+            return array;
+        }
+    }
+
 }
