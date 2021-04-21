@@ -109,6 +109,7 @@ public class StaticArray implements Array {
                 break;
             case QUICK:
                 quickSort();
+                break;
             default:
                 sort();
         }
@@ -163,12 +164,12 @@ public class StaticArray implements Array {
 
     private void mergeSort() {
         //TODO**: сортировка слиянием (по возрастанию)
-        mergeSortRec(array);
+        array = mergeSortRec(array);
     }
 
     private void quickSort() {
         //TODO**: быстрая сортировка (по возрастанию)
-        quickSortRec(array);
+        array = quickSortRec(array);
     }
 
     public boolean isAscSorted() {
@@ -239,16 +240,27 @@ public class StaticArray implements Array {
         int left = 0;
         int right = array.length - 1;
         int base = array.length / 2;
-        while (array[left] < array[base]) {
-            left++;
-        }
-        while (array[right] > array[base]) {
-            right--;
-        }
-        if (right > left) {
-            swap(array, right, left);
-            left++;
-            right--;
+        while (right > left) {
+            while (array[left] <= array[base] && left < base) {
+                left++;
+            }
+            while (array[right] >= array[base] && right > base) {
+                right--;
+            }
+            if (right == left) {
+                return array;
+            }
+            if (right > left) {
+                swap(array, right, left);
+                if (right == base || left == base) {
+                    left = 0;
+                    right = array.length - 1;
+                } else {
+                    left++;
+                    right--;
+                }
+            }
+
         }
         return array;
     }
@@ -263,7 +275,7 @@ public class StaticArray implements Array {
         for (int i = 0; i < array.length / 2; i++) {
             result[i] = array1[i];
         }
-        for (int i = array.length / 2; i < array.length; i++){
+        for (int i = array.length / 2; i < array.length; i++) {
             result[i] = array2[i - array.length / 2];
         }
         return result;
