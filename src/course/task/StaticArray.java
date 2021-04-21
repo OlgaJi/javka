@@ -108,6 +108,7 @@ public class StaticArray implements Array {
                 mergeSort();
                 break;
             case QUICK:
+                quickSort();
             default:
                 sort();
         }
@@ -167,6 +168,7 @@ public class StaticArray implements Array {
 
     private void quickSort() {
         //TODO**: быстрая сортировка (по возрастанию)
+        quickSortRec(array);
     }
 
     public boolean isAscSorted() {
@@ -231,6 +233,40 @@ public class StaticArray implements Array {
         } else {
             return array;
         }
+    }
+
+    private int[] sortToBase(int[] array) {
+        int left = 0;
+        int right = array.length - 1;
+        int base = array.length / 2;
+        while (array[left] < array[base]) {
+            left++;
+        }
+        while (array[right] > array[base]) {
+            right--;
+        }
+        if (right > left) {
+            swap(array, right, left);
+            left++;
+            right--;
+        }
+        return array;
+    }
+
+    private int[] quickSortRec(int[] array) {
+        sortToBase(array);
+        int[] array1 = copy(array, 0, array.length / 2);
+        int[] array2 = copy(array, array.length / 2, array.length);
+        sortToBase(array1);
+        sortToBase(array2);
+        int[] result = new int[array.length];
+        for (int i = 0; i < array.length / 2; i++) {
+            result[i] = array1[i];
+        }
+        for (int i = array.length / 2; i < array.length; i++){
+            result[i] = array2[i - array.length / 2];
+        }
+        return result;
     }
 
 }
