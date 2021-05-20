@@ -41,6 +41,11 @@ abstract class AnimalSpecies implements EventHandler {
     abstract public void feeding();
 
     /**
+     * Defines a behavior on "watering a species" event
+     */
+    abstract public void watering();
+
+    /**
      * Defines a behavior on "night time" event
      */
     abstract public void night();
@@ -54,6 +59,11 @@ abstract class AnimalSpecies implements EventHandler {
      * Defines a behavior on "thunder strike" event
      */
     abstract public void thunder();
+
+    /**
+     * Defines a behavior on "rain" event
+     */
+    abstract public void rain();
 
     /**
      * Defines a behavior for updating current state, according to zoo info about type
@@ -80,6 +90,9 @@ abstract class AnimalSpecies implements EventHandler {
             case FEEDING:
                 feeding();
                 break;
+            case WATERING:
+                watering();
+                break;
             case NIGHT:
                 night();
                 break;
@@ -88,6 +101,9 @@ abstract class AnimalSpecies implements EventHandler {
                 break;
             case THUNDER:
                 thunder();
+                break;
+            case RAIN:
+                rain();
                 break;
             case UPDATE_STATE:
                 updateSpeciesState();

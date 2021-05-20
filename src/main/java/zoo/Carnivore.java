@@ -42,6 +42,13 @@ public class Carnivore extends AnimalSpecies {
         printDescription();
     }
 
+    @Override
+    public void watering() {
+        currentState = AnimalState.CALM;
+        Zoo.setAllCarnivoreState(AnimalState.CALM);
+        printDescription();
+    }
+
     /**
      * Method for "night time" event
      * Changes state of species to SLEEP if no one is making noises
@@ -94,6 +101,13 @@ public class Carnivore extends AnimalSpecies {
      */
     @Override
     public void thunder() {
+        setCurrentState(AnimalState.MAKE_NOISE);
+        Zoo.setAllCarnivoreState(AnimalState.MAKE_NOISE);
+        printDescription();
+    }
+
+    @Override
+    public void rain() {
         setCurrentState(AnimalState.MAKE_NOISE);
         Zoo.setAllCarnivoreState(AnimalState.MAKE_NOISE);
         printDescription();

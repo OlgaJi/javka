@@ -38,6 +38,11 @@ public class ActionTrigger {
         zoo.performAction(Events.FEEDING, animalType);
     }
 
+    void waterAnimals(AnimalType animalType) {
+        System.out.println("\n--- Watering " + animalType.name() + " ---");
+        zoo.performAction(Events.WATERING, animalType);
+    }
+
     /**
      * Method for invoking "night time" event for all animals in the zoo
      */
@@ -59,5 +64,10 @@ public class ActionTrigger {
     void setThunder() {
         System.out.println("\n--- Set thunder ---");
         zoo.performAction(Events.THUNDER);
+    }
+
+    void setRain() {
+        System.out.println("\n--- Set rain ---");
+        zoo.performAction(Events.RAIN);
     }
 }

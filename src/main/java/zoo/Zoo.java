@@ -1,6 +1,7 @@
 package zoo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,6 +52,24 @@ public class Zoo {
     public void addAnimals(String jsonPath) {
         ObjectMapper mapper = new ObjectMapper();
         File animalsFile = new File(jsonPath);
+        try {
+            AnimalsDataFile animalsData = mapper.readValue(animalsFile, AnimalsDataFile.class);
+            zooAnimalSpecies.addAll(animalsData.getCarnivoreAnimals());
+            zooAnimalSpecies.addAll(animalsData.getHerbivoreAnimals());
+        } catch (IOException e) {
+            System.out.println(e.toString());
+            throw new IllegalStateException("File hasn't been parsed");
+        }
+    }
+
+    /**
+     * Method for adding animals to the zoo from the specified XML file
+     *
+     * @param xmlPath path to XML file with animals info
+     */
+    public void addAnimalsXml(String xmlPath) {
+        ObjectMapper mapper = new XmlMapper();
+        File animalsFile = new File(xmlPath);
         try {
             AnimalsDataFile animalsData = mapper.readValue(animalsFile, AnimalsDataFile.class);
             zooAnimalSpecies.addAll(animalsData.getCarnivoreAnimals());

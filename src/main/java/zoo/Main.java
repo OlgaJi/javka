@@ -4,12 +4,10 @@ public class Main {
 
     public static void main(String[] argv) {
 
-        String filePath = argv[0];
+        CommandLineArgParser commandLineArgParser = new CommandLineArgParser (argv);
 
-        // Create zoo
-        Zoo zoo = new Zoo();
-        // Add animals to the zoo
-        zoo.addAnimals(filePath);
+        // Create zoo and add animals to the zoo
+        Zoo zoo = commandLineArgParser.parse();
 
         // Create user action trigger
         ActionTrigger trigger = new ActionTrigger(zoo);
@@ -45,6 +43,13 @@ public class Main {
         zoo.printAllStates();
 
         trigger.setMorning();
+        zoo.printAllStates();
+
+        trigger.setRain();
+        zoo.printAllStates();
+        trigger.waterAnimals(herbivore);
+        zoo.printAllStates();
+        trigger.waterAnimals(carnivore);
         zoo.printAllStates();
     }
 }
