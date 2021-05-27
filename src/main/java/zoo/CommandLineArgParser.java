@@ -26,6 +26,9 @@ public class CommandLineArgParser {
                     case "JSON":
                         fileType = FileType.JSON;
                         break;
+                    case "DB":
+                        fileType = FileType.DataBase;
+                        break;
                 }
             } else if (arg.contains("-configfile")) {
                 String[] splitArg = arg.split("=");
@@ -34,15 +37,19 @@ public class CommandLineArgParser {
                 }
                 filePath = splitArg[1] + " ";
             } else {
-                filePath = filePath + arg;
+                filePath = filePath + arg+ " ";
             }
         }
+        filePath = filePath.trim();
         switch (fileType) {
             case XML:
                 zoo.addAnimalsXml(filePath);
                 break;
             case JSON:
                 zoo.addAnimals(filePath);
+                break;
+            case DataBase:
+                zoo.addAnimalsDB(filePath);
                 break;
         }
         return zoo;

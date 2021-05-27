@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -77,6 +79,53 @@ public class Zoo {
         } catch (IOException e) {
             System.out.println(e.toString());
             throw new IllegalStateException("File hasn't been parsed");
+        }
+    }
+
+    public void addAnimalsDB(String url) {
+        try {
+            loadFromDataBase(url);
+        } catch (SQLException e) {
+            System.out.println("Database " + url + " error to load animals");
+            System.out.println(e);
+        }
+    }
+
+    public void loadFromDataBase(String url) throws SQLException {
+        try {
+            Class.forName("org.postgresql.Driver");
+        }
+        catch (ClassNotFoundException e){
+            System.out.println("Cant found arg.postgresql.Driver class");
+        }
+        try (Connection connection = DriverManager.getConnection(url, "zoo_user", "zoo_psw")) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from animals")) {
+                try (ResultSet animalsSet = preparedStatement.executeQuery()) {
+                    List<AnimalSpecies> animals = new ArrayList<>();
+                    while (animalsSet.next()) {
+                        String name = animalsSet.getString("name");
+                        int amount = animalsSet.getInt("amount");
+                        AnimalType animalType = AnimalType.valueOf(animalsSet.getString("type").toUpperCase());
+                        switch (animalType) {
+                            case CARNIVORE:
+                                Carnivore carnivore = new Carnivore();
+                                carnivore.setName(name);
+                                carnivore.setAmount(amount);
+                                animals.add(carnivore);
+                                break;
+                            case HERBIVORE:
+                                Herbivore herbivore = new Herbivore();
+                                herbivore.setName(name);
+                                herbivore.setAmount(amount);
+                                animals.add(herbivore);
+                                break;
+                            default:
+                                throw new IllegalStateException("Animal type " + animalType + " is not supported");
+                        }
+                    }
+                    zooAnimalSpecies.addAll(animals);
+                }
+            }
         }
     }
 

@@ -1,0 +1,10 @@
+version: '3.1'
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: zoo
+      POSTGRES_USER: zoo_user
+      POSTGRES_PASSWORD: zoo_psw
+    ports:
+      - 5433:5432

@@ -2,5 +2,6 @@ package zoo;
 
 public enum FileType {
     JSON,
-    XML
+    XML,
+    DataBase
 }
